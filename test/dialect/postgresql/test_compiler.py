@@ -546,6 +546,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
         idx1 = Index("test_idx1", tbl.c.data)
         idx2 = Index("test_idx2", tbl.c.data, postgresql_using="btree")
         idx3 = Index("test_idx3", tbl.c.data, postgresql_using="hash")
+        idx4 = Index("test_idx4", tbl.c.data, postgresql_using="BTREE")
 
         self.assert_compile(
             schema.CreateIndex(idx1),
@@ -560,6 +561,11 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
         self.assert_compile(
             schema.CreateIndex(idx3),
             "CREATE INDEX test_idx3 ON testtbl " "USING hash (data)",
+            dialect=postgresql.dialect(),
+        )
+        self.assert_compile(
+            schema.CreateIndex(idx4),
+            "CREATE INDEX test_idx4 ON testtbl " "USING BTREE (data)",
             dialect=postgresql.dialect(),
         )
 
