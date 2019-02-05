@@ -1908,7 +1908,7 @@ class PGDDLCompiler(compiler.DDLCompiler):
 
         using = index.dialect_options["postgresql"]["using"]
         if using:
-            text += "USING %s " % preparer.quote(using)
+            text += "USING %s " % (using)
 
         ops = index.dialect_options["postgresql"]["ops"]
         text += "(%s)" % (
